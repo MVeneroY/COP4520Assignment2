@@ -4,33 +4,33 @@ public class Guest implements Runnable {
 
     private Lock lock;
     private boolean[] cupcake;
-    private boolean hasRun = false;
-    private int index = -1;
+    private int[] cupcakes;
+    private boolean hadCupcake = false;
+    private boolean[] allVisited;
 
-    public Guest(int index, Lock lock, boolean[] cupcake) { 
-        this.index = index;
+    public Guest(Lock lock, boolean[] cupcake, int[] cupcakes, boolean[] allVisited) { 
         this.lock = lock; 
         this.cupcake = cupcake;
+        this.cupcakes = cupcakes;
+        this.allVisited = allVisited;
     }
     
     @Override
     public void run() {
 
-        // System.out.println("Testing");
+        // Guest will eat cupcake only the first time they visit the labyrinth
         if (lock.tryLock()) {
-            if (cupcake[0]) eatCupcake();
-            else replenishCupcake();
+            if (!cupcake[0]) replenishCupcake();
+            if (!this.hadCupcake) eatCupcake();
             lock.unlock();
         }
-
-        hasRun = true;
-        getHasRun();
     }
 
     void eatCupcake() {
         lock.lock();
         try {
             cupcake[0] = false;
+            this.hadCupcake = true;
         } finally {
             lock.unlock();
         }
@@ -39,13 +39,11 @@ public class Guest implements Runnable {
     void replenishCupcake() {
         lock.lock();
         try {
+            if (this.cupcakes[0] == 0) allVisited[0] = true;
             cupcake[0] = true;
+            cupcakes[0] -= 1;
         } finally {
             lock.unlock();
         }
-    }
-
-    void getHasRun() {
-        System.out.println(this.index + ": " + this.hasRun);
     }
 }

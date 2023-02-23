@@ -23,24 +23,24 @@ class Runner {
         }
         System.out.println(n + " threads started");
 
-        // System.out.println(cupcake);
-        // eatCupcake();
-        // System.out.println(cupcake);
-        // replenishCupcake();
-        // System.out.println(cupcake);
+        int cupcakes[] = {n - 1};
+        boolean allVisited[] = {false};
 
         ExecutorService executorService = Executors.newFixedThreadPool(n);
         Runnable guests[] = new Guest[n];
         for (int i = 0; i < n; ++i) {
-            guests[i] = new Guest(i, lock, cupcake);
+            guests[i] = new Guest(lock, cupcake, cupcakes, allVisited);
         }
 
         Random rand = new Random();
         for (int j = 0; j < runs; ++j) {
-            System.out.println("run: " + (j+1));
             int index = rand.nextInt(n);
+            System.out.println("run: " + (j+1) + ". id: " + index);
             executorService.execute(guests[index]);
         }
+
+        if (allVisited[0]) System.out.println("All guests visited the labirynth at least once");
+        else System.out.println("Not all guests visited the labyrinth");
         executorService.shutdown();
 
         while (!executorService.isTerminated()) { 
@@ -50,7 +50,5 @@ class Runner {
                 System.out.println(e);
             }
         }
-
-        System.out.println(cupcake[0]);
     }
 }

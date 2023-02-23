@@ -1,3 +1,5 @@
+import java.util.concurrent.locks.Lock;
+
 public class Guest implements Runnable {
 
     Guest[] q;
@@ -8,6 +10,9 @@ public class Guest implements Runnable {
     Guest(Guest[] q, int id) {
         this.q = q;
         this.id = id;
+    }
+
+    public Guest(Lock lock, boolean[] cupcake, int[] cupcakes, boolean[] allVisited) {
     }
 
     @Override
