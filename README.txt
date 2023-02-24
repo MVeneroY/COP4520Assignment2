@@ -7,10 +7,10 @@ February 23, 2023
 
 To compile:
     $ cd part1
-    $ javac Runner.java 
+    $ javac Runner1.java 
 
 To run:
-    $ java Runner x
+    $ java Runner1 x
     where x is the number of guests (threads) you want to initialize
 
 
@@ -47,10 +47,10 @@ Experimental Evaluation:
 
 to compile:
     $ cd part2 
-    $ javac Runner.java 
+    $ javac Runner2.java 
 
 To run:
-    $ java Runner x
+    $ java Runner2 x
     where x is the number of guests (threads) you want to initialize
 
 
