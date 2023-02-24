@@ -13,12 +13,16 @@ public class Runner2 {
 
     public static void main(String[] args) {
         
+        if (args.length == 1) guests = Integer.parseInt(args[0]);
+    
         // Initialize threads and place them in queue
         q = new Guest2[guests];
         ExecutorService executorService = Executors.newFixedThreadPool(guests);
         for (int i = 0; i < guests; ++i) {
             q[i] = new Guest2(q, i, vase);
         }
+
+        long startTime = System.currentTimeMillis();
 
         // Let guests into the room as per the queue
         int index = 0;
@@ -53,5 +57,8 @@ public class Runner2 {
                 System.out.println(e);
             }
         }
+
+        long endTime = System.currentTimeMillis();
+        System.out.println((endTime - startTime) + " ms");
     }
 }
