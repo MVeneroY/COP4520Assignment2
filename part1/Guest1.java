@@ -1,6 +1,6 @@
 import java.util.concurrent.locks.Lock;
 
-public class Guest implements Runnable {
+public class Guest1 implements Runnable {
 
     private Lock lock;
     private boolean[] cupcake;
@@ -8,7 +8,7 @@ public class Guest implements Runnable {
     private boolean hadCupcake = false;
     private boolean[] allVisited;
 
-    public Guest(Lock lock, boolean[] cupcake, int[] cupcakes, boolean[] allVisited) { 
+    public Guest1(Lock lock, boolean[] cupcake, int[] cupcakes, boolean[] allVisited) { 
         this.lock = lock; 
         this.cupcake = cupcake;
         this.cupcakes = cupcakes;

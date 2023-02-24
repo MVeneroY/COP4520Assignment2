@@ -6,8 +6,8 @@ import java.util.concurrent.locks.ReentrantLock;
 
 // N upper bound - 100
 
-class Runner {
-    static int runs = 20;
+class Runner1 {
+    static int runs;
 
     static boolean cupcake[] = {true};
     static Lock lock = new ReentrantLock();
@@ -23,13 +23,15 @@ class Runner {
         }
         System.out.println(n + " threads started");
 
+        long startTime = System.currentTimeMillis();
         int cupcakes[] = {n - 1};
+        runs = n-1;
         boolean allVisited[] = {false};
 
         ExecutorService executorService = Executors.newFixedThreadPool(n);
-        Runnable guests[] = new Guest[n];
+        Runnable guests[] = new Guest1[n];
         for (int i = 0; i < n; ++i) {
-            guests[i] = new Guest(lock, cupcake, cupcakes, allVisited);
+            guests[i] = new Guest1(lock, cupcake, cupcakes, allVisited);
         }
 
         Random rand = new Random();
@@ -50,5 +52,8 @@ class Runner {
                 System.out.println(e);
             }
         }
+
+        long endTime = System.currentTimeMillis();
+        System.out.println((endTime - startTime) + " ms");
     }
 }

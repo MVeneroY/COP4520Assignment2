@@ -2,9 +2,10 @@ import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class Runner {
+public class Runner2 {
 
-    static Guest[] q;
+    static Guest2[] q;
+    static int[] vase = {0};
     static int guests = 8;
     static int done = 0;
 
@@ -12,14 +13,14 @@ public class Runner {
 
     public static void main(String[] args) {
         
-        q = new Guest[guests];
+        // Initialize threads and place them in queue
+        q = new Guest2[guests];
         ExecutorService executorService = Executors.newFixedThreadPool(guests);
         for (int i = 0; i < guests; ++i) {
-            q[i] = new Guest(q, i);
+            q[i] = new Guest2(q, i, vase);
         }
 
-        // for (int i = 0; i < guests; ++i) System.out.println(q[i].id);
-
+        // Let guests into the room as per the queue
         int index = 0;
         while (done != guests) {
             if (!q[index % guests].done) {
@@ -43,6 +44,7 @@ public class Runner {
             index += 1;
         }        
 
+        // terminate threads
         executorService.shutdown();
         while (!executorService.isTerminated()) { 
             try {
